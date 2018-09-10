@@ -26,7 +26,7 @@ It should open a tab in you browser on http://localhost:3000/.
 
 ## Test Objectives
 
-The following objectives should be done in a strict time of one hour.
+The applicant should try to complete the objectives below in the listed order.
 
 * List the first 25 [Files](https://developers.google.com/drive/api/v3/reference/files) from Drive for the current user.
 * Display Files as a list with the following informations: Title / Modification Date (relative time) / Thumbnail.<sup>[1](#myfootnote1)</sup>
