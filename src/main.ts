@@ -1,9 +1,9 @@
 import { getRequestHeaders } from './auth';
 
 async function listDriveFile(): Promise<void> {
-  const options = await getRequestHeaders();
+  const headers = await getRequestHeaders();
 
-  console.log(options);
+  console.log(headers);
 }
 
 listDriveFile();
