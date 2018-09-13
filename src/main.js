@@ -1,7 +1,7 @@
 import { getRequestHeaders } from './auth';
 
 function listDriveFile() {
-  getRequestHeaders().then(options => console.log(options));
+  getRequestHeaders().then(headers => console.log(headers));
 }
 
 listDriveFile();

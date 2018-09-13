@@ -1,5 +1,7 @@
 import $ from 'jquery';
 
+(<any>window).$ = $;
+
 interface WindowGapi extends Window {
   onSignIn: (googleUser: any) => void;
 }
@@ -18,13 +20,17 @@ windowGapi.onSignIn = (googleUser: any): void => {
   accessTokenRetrieved(accessToken);
 };
 
-export async function getRequestHeaders(): Promise<object> {
+export interface RequestHeaders {
+  [key: string]: string,
+  Authorization: string,
+  'Content-Type': string,
+}
+
+export async function getRequestHeaders(): Promise<RequestHeaders> {
   const userToken = await accessTokenPromise;
 
   return {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-      'Content-Type': 'application/json',
-    },
+    Authorization: `Bearer ${userToken}`,
+    'Content-Type': 'application/json',
   };
 }
