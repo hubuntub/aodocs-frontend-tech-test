@@ -1,9 +1,13 @@
-import { getRequestHeaders } from './auth';
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-async function listDriveFile(): Promise<void> {
-  const headers = await getRequestHeaders();
-
-  console.log(headers);
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+import 'zone.js';
+if (environment.production) {
+    enableProdMode();
 }
 
-listDriveFile();
+platformBrowserDynamic().bootstrapModule(AppModule)
+    .catch(err => console.error(err));
+
