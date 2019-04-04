@@ -1,18 +1,31 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {RouterModule, Routes} from "@angular/router";
-const routes: Routes = [];
+import {HomeComponent} from './home/home.component';
+import {SignInComponent} from './sign-in/sign-in.component';
+import {FilesService} from "./home/files.service";
+import {HttpClientModule} from "@angular/common/http";
+
+const routes: Routes = [
+    {path: '', component: SignInComponent},
+    {path: 'home', component: HomeComponent}
+];
+
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes)
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        SignInComponent
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        RouterModule.forRoot(routes)
+    ],
+    providers: [FilesService],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
