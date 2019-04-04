@@ -3,4 +3,5 @@ export default interface File {
     name: string;
     thumbnailLink: string;
     modifiedTime: string;
+    webViewLink: string;
 }

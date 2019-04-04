@@ -19,7 +19,7 @@ export class FilesService {
 
     getFiles(maxNumber: number): Observable<File[]> {
         const headers = this.headers;
-        let url = `${this.API_URL}/?pageSize=${maxNumber}&fields=kind,files(id,name,thumbnailLink,modifiedTime)`;
+        let url = `${this.API_URL}/?pageSize=${maxNumber}&fields=kind,files(id,name,thumbnailLink,modifiedTime,webViewLink)`;
 
         return this.http.get(url,
             {headers}).pipe(map((response: any) => {
