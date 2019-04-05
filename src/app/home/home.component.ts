@@ -19,4 +19,11 @@ export class HomeComponent implements OnInit {
             .subscribe(files => this.files = files);
     }
 
+
+    toggleSelection(selected: File): void {
+        this.files = this.files.map(file => {
+            return file.id === selected.id ? {...file, isSelected: !file.isSelected} : file;
+        });
+    }
+
 }

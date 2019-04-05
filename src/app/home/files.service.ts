@@ -29,7 +29,9 @@ export class FilesService {
 
     private transform(files: any): File[] {
         return files.map((file: any) => {
-            return {...file, modifiedTime: m(file.modifiedTime).fromNow()};
+            return {...file,
+                modifiedTime: m(file.modifiedTime).fromNow(),
+                isSelected: false};
         });
     }
 }

@@ -4,4 +4,5 @@ export default interface File {
     thumbnailLink: string;
     modifiedTime: string;
     webViewLink: string;
+    isSelected: boolean;
 }

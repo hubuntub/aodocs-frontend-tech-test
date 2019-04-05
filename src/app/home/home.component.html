@@ -1,6 +1,6 @@
 <div class="container">
   <table class="table">
-    <tr *ngFor="let file of files">
+    <tr *ngFor="let file of files" (click)="toggleSelection(file)" [class.active]="file.isSelected">
       <td><a href="{{file?.webViewLink}}" target="_blank"><img [src]="file?.thumbnailLink"></a></td>
       <td>{{file.name}}</td>
       <td>{{file.modifiedTime}}</td>
