@@ -3,16 +3,24 @@
     <button (click)="star()">Add to Favorites</button>
     <button (click)="unstar()">Remove from favorites</button>
   </div>
-  <table class="table">
-    <tr *ngFor="let file of files" (click)="toggleSelection(file)" [class.active]="file.isSelected">
-      <td><a href="{{file?.webViewLink}}" target="_blank"><img [src]="file?.thumbnailLink"></a></td>
-      <td>{{file.name}}</td>
-      <td>{{file.modifiedTime}}</td>
-      <td>
-        <input type="image"
-               src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/whatsapp/186/white-medium-star_2b50.png"
-               border="0" [disabled]="!file.starred" />
-      </td>
-    </tr>
-  </table>
+
+  <div *ngIf="files">
+    <app-pagination (nextPage)="goNext()"
+                    (previousPage)="goPrevious()"
+                    [maxPerPage]="maxPerPage"
+                    [page]="page"
+                    [total]="files.length"></app-pagination>
+    <table class="table">
+      <tr *ngFor="let file of files" (click)="toggleSelection(file)" [class.active]="file.isSelected">
+        <td><a href="{{file?.webViewLink}}" target="_blank"><img [src]="file?.thumbnailLink"></a></td>
+        <td>{{file.name}}</td>
+        <td>{{file.modifiedTime}}</td>
+        <td>
+          <input type="image"
+                 src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/whatsapp/186/white-medium-star_2b50.png"
+                 border="0" [disabled]="!file.starred" />
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>

@@ -15,16 +15,40 @@ export class FilesService {
         this.headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+        sessionStorage.removeItem('nextPageToken');
     }
 
-    getFiles(maxNumber: number): Observable<File[]> {
+    getFiles(maxNumber: number, page: number): Observable<File[]> {
         const headers = this.headers;
-        const url = `${this.API_URL}/?pageSize=${maxNumber}&fields=kind,files(id,name,thumbnailLink,modifiedTime,webViewLink,starred)`;
-
-        return this.http.get(url,
+        return this.http.get(this.buildUrl(maxNumber, page),
             {headers}).pipe(map((response: any) => {
-            return this.transform(response.files);
+                this.store(response, page);
+                return this.transform(response.files);
         }));
+    }
+
+    private buildUrl(maxNumber: number, page: number): string {
+        let url = `${this.API_URL}/?pageSize=${maxNumber}&fields=kind,nextPageToken,files(id,name,thumbnailLink,modifiedTime,webViewLink,starred)`;
+        const pageToken = this.getTokenPage(page);
+        if (pageToken) {
+            url = `${url}&pageToken=${pageToken}`;
+        }
+        return url;
+    }
+
+    private getTokenPage(page: number): string {
+        const tokens = JSON.parse(sessionStorage.getItem('nextPageToken'));
+        if (!tokens) {
+            sessionStorage.setItem('nextPageToken', JSON.stringify({0: ''}));
+            return '';
+        }
+        return tokens[page];
+    }
+
+    private store(response: any, page: number): void {
+        const oldTokens = JSON.parse(sessionStorage.getItem('nextPageToken'));
+        oldTokens[page + 1] = response.nextPageToken;
+        sessionStorage.setItem('nextPageToken', JSON.stringify(oldTokens));
     }
 
     private transform(files: any): File[] {

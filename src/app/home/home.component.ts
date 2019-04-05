@@ -10,12 +10,12 @@ import File from './File';
 })
 export class HomeComponent implements OnInit {
     private files: File[];
-
-    constructor(private filesService: FilesService) {
-    }
+    private page = 0;
+    private maxPerPage = 4;
+    constructor(private filesService: FilesService) {}
 
     ngOnInit() {
-        this.filesService.getFiles(25)
+        this.filesService.getFiles(this.maxPerPage, this.page)
             .subscribe(files => this.files = files);
     }
 
@@ -25,6 +25,18 @@ export class HomeComponent implements OnInit {
         });
     }
 
+
+    goNext() {
+        this.filesService.getFiles(this.maxPerPage, ++this.page).subscribe(files => {
+            return this.files = files;
+        });
+    }
+
+    goPrevious() {
+        this.filesService.getFiles(this.maxPerPage, --this.page).subscribe(files => {
+            return this.files = files;
+        });
+    }
 
     star(): void {
         this.toggleFavorite(true);
