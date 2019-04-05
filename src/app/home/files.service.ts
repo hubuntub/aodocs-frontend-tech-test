@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import File from './File';
@@ -9,19 +9,13 @@ import * as m from "moment";
 export class FilesService {
 
     readonly API_URL = 'https://www.googleapis.com/drive/v3/files';
-    private headers: HttpHeaders;
 
     constructor(private http: HttpClient) {
-        this.headers = new HttpHeaders()
-            .set('Content-Type', 'application/json')
-            .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
         sessionStorage.removeItem('nextPageToken');
     }
 
     getFiles(maxNumber: number, page: number): Observable<File[]> {
-        const headers = this.headers;
-        return this.http.get(this.buildUrl(maxNumber, page),
-            {headers}).pipe(map((response: any) => {
+        return this.http.get(this.buildUrl(maxNumber, page)).pipe(map((response: any) => {
                 this.store(response, page);
                 return this.transform(response.files);
         }));
@@ -60,8 +54,7 @@ export class FilesService {
     }
 
     update(file: File): Observable<any> {
-        const headers = this.headers;
         return this.http.patch(`${this.API_URL}/${file.id}?alt=json`,
-            {starred: file.starred}, {headers});
+            {starred: file.starred});
     }
 }

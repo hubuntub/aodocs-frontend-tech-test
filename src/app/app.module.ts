@@ -6,8 +6,9 @@ import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from './home/home.component';
 import {SignInComponent} from './sign-in/sign-in.component';
 import {FilesService} from "./home/files.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { PaginationComponent } from './pagination/pagination.component';
+import {InterceptorService} from "./interceptor.service";
 
 const routes: Routes = [
     {path: '', component: SignInComponent},
@@ -26,7 +27,10 @@ const routes: Routes = [
         HttpClientModule,
         RouterModule.forRoot(routes)
     ],
-    providers: [FilesService],
+    providers: [
+        FilesService,
+        {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}
+        ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
