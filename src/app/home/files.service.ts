@@ -19,7 +19,7 @@ export class FilesService {
 
     getFiles(maxNumber: number): Observable<File[]> {
         const headers = this.headers;
-        let url = `${this.API_URL}/?pageSize=${maxNumber}&fields=kind,files(id,name,thumbnailLink,modifiedTime,webViewLink)`;
+        const url = `${this.API_URL}/?pageSize=${maxNumber}&fields=kind,files(id,name,thumbnailLink,modifiedTime,webViewLink,starred)`;
 
         return this.http.get(url,
             {headers}).pipe(map((response: any) => {
@@ -33,5 +33,11 @@ export class FilesService {
                 modifiedTime: m(file.modifiedTime).fromNow(),
                 isSelected: false};
         });
+    }
+
+    update(file: File): Observable<any> {
+        const headers = this.headers;
+        return this.http.patch(`${this.API_URL}/${file.id}?alt=json`,
+            {starred: file.starred}, {headers});
     }
 }

@@ -17,7 +17,11 @@ export class SignInComponent implements AfterViewInit {
         'https://www.googleapis.com/auth/plus.me',
         'https://www.googleapis.com/auth/contacts.readonly',
         'https://www.googleapis.com/auth/admin.directory.user.readonly',
-        'https://www.googleapis.com/auth/drive.readonly'
+        'https://www.googleapis.com/auth/drive',
+        'https://www.googleapis.com/auth/drive.file',
+        'https://www.googleapis.com/auth/drive.appdata',
+        'https://www.googleapis.com/auth/drive.scripts',
+        'https://www.googleapis.com/auth/drive.metadata'
     ].join(' ');
     private auth2: any;
 

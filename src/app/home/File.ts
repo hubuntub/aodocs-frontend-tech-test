@@ -5,4 +5,5 @@ export default interface File {
     modifiedTime: string;
     webViewLink: string;
     isSelected: boolean;
+    starred: boolean;
 }
